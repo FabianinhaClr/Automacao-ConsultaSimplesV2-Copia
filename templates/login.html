@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Rossetto Advogados — Área Restrita</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root{
+            --verde-escuro: #0f5a35;
+            --verde-medio:  #2f8a51;
+            --dourado:      #b5882b;
+            --cinza-claro:  #f5f6f7;
+            --texto:        #21312a;
+        }
+
+        html, body{
+            height:100%;
+            margin:0;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background: linear-gradient(180deg, #f7f9f8 0%, #eef3ef 100%);
+            color: var(--texto);
+        }
+
+        .wrap {
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding: 32px;
+        }
+
+        .card {
+            width:100%;
+            max-width:420px;
+            background:#ffffff;
+            border-radius:12px;
+            box-shadow: 0 12px 30px rgba(12,40,18,0.08);
+            padding:28px;
+            border: 1px solid rgba(16,64,35,0.04);
+        }
+
+        .brand {
+            display:flex;
+            gap:16px;
+            align-items:center;
+            margin-bottom: 6px;
+        }
+        .brand img {
+            height:64px;
+            object-fit:contain;
+        }
+        .brand h1{
+            font-size:1.4rem;
+            margin:0;
+            color:var(--verde-escuro);
+            letter-spacing:0.2px;
+        }
+
+        .subtitle {
+            color: #516a59;
+            margin:6px 0 22px;
+            font-style:italic;
+        }
+
+        input.form-control {
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-rossetto {
+            background: var(--verde-escuro);
+            color: white;
+            border: none;
+            padding:10px 18px;
+            border-radius:8px;
+            font-weight:600;
+            box-shadow: 0 6px 16px rgba(15,90,53,0.12);
+        }
+        .btn-rossetto:hover{
+            background: var(--verde-medio);
+        }
+
+        .error {
+            color:#b00020;
+            font-size:0.9rem;
+            margin-bottom:12px;
+        }
+
+        @media (max-width:520px){
+            .brand img { height:52px; }
+            .card { padding:18px; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <div class="brand">
+            <!-- <img src="{% static 'img/logo_rossetto.png' %}" alt="Rossetto Advogados"> -->
+            <div>
+                <h1>Rossetto Advogados</h1>
+                <div class="hint">Área Restrita</div>
+            </div>
+        </div>
+
+        <p class="subtitle">Faça login para acessar o sistema</p>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <input class="form-control" type="text" name="username" placeholder="Usuário" required>
+            <input class="form-control" type="password" name="password" placeholder="Senha" required>
+
+            <div class="d-grid">
+                <button type="submit" class="btn-rossetto">Entrar</button>
+            </div>
+        </form>
+
+        <div class="hint mt-3" style="font-size:0.85rem;">
+            Versão interna — Rossetto Advogados. Não compartilhe dados sensíveis sem autorização.
+        </div>
+    </div>
+</div>
+</body>
+</html>
