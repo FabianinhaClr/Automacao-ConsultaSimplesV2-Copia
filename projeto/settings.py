@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "projeto.app",
 
     "whitenoise.runserver_nostatic",
+
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# exemplo com Redis local
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
