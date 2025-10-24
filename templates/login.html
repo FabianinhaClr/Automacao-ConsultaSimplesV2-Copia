@@ -97,37 +97,27 @@
     </style>
 </head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <div class="brand">
-            <!-- <img src="{% static 'img/logo_rossetto.png' %}" alt="Rossetto Advogados"> -->
-            <div>
-                <h1>Rossetto Advogados</h1>
-                <div class="hint">Área Restrita</div>
-            </div>
-        </div>
+  <div class="card">
+    <h1>Rossetto Advogados</h1>
+    <h3>Área Restrita</h3>
+    <p>Faça login para acessar o sistema</p>
 
-        <p class="subtitle">Faça login para acessar o sistema</p>
-        <form method="post" action="{% url 'login' %}">
-       <form id="form-login" method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <input type="text"     name="usuario" placeholder="Usuário" required>
-            <input type="password" name="senha"   placeholder="Senha"   required>
-            <button type="submit">Entrar</button>
-            </form>
+    <form id="form-login" method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div><input type="text" name="usuario" placeholder="Usuário" required></div>
+      <div style="margin-top:8px;"><input type="password" name="senha" placeholder="Senha" required></div>
+      <div style="margin-top:10px;"><button type="submit">Entrar</button></div>
+    </form>
 
-{% if messages %}
-  <div id="msgs">
-    {% for message in messages %}
-      <div>{{ message }}</div>
-    {% endfor %}
+    {% if messages %}
+      <div id="msgs">
+        {% for message in messages %}
+          <div class="msg-erro">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <small>Versão interna — Rossetto Advogados.</small>
   </div>
-{% endif %}
-
-        <div class="hint mt-3" style="font-size:0.85rem;">
-            Versão interna — Rossetto Advogados. Não compartilhe dados sensíveis sem autorização.
-        </div>
-    </div>
-</div>
 </body>
 </html>
