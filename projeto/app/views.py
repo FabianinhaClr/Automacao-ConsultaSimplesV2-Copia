@@ -4,10 +4,10 @@ from io import BytesIO
 from datetime import datetime
 
 from django.http import JsonResponse, HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ImproperlyConfigured
-
+from django.contrib import messages
 import pandas as pd
 import redis
 
@@ -42,11 +42,11 @@ def _save_result(job_id, content_bytes: bytes, filename: str, ttl_seconds: int =
     _set_job(job_id, state="SUCCESS", filename=filename)
 
 # ---------- suas páginas ----------
-def index(request):
-    return render(request, "index.html")
 
-def login_view(request):
-    return render(request, "login.html")
+
+def index(request):
+    return redirect('login')
+
 
 def upload_page(request):
     # mantém seu layout do upload
