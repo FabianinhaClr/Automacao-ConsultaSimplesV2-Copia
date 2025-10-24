@@ -14,6 +14,34 @@ import redis
 # >>> se sua função está aqui:
 from . import consulta_do_simples  # ajuste se o nome do módulo for outro
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+import os
+
+# defina no Render: ADMIN_USER e ADMIN_PASS (Settings → Environment)
+ADMIN_USER = os.getenv("ADMIN_USER", "admin")
+ADMIN_PASS = os.getenv("ADMIN_PASS", "1234")
+
+def login_view(request):
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario', '').strip()
+        senha   = request.POST.get('senha', '').strip()
+
+        # DEBUG: veja no Live Tail se os campos estão chegando
+        print("DEBUG LOGIN POST:", {"usuario": usuario, "tem_senha": bool(senha)})
+
+        if usuario == ADMIN_USER and senha == ADMIN_PASS:
+            request.session['usuario'] = usuario
+            return redirect('upload_page')
+        else:
+            # Limpa mensagens antigas e adiciona só uma
+            storage = messages.get_messages(request)
+            for _ in storage: 
+                pass
+            messages.error(request, 'Usuário ou senha incorretos')
+
+    return render(request, 'login.html')
+
 # ---------- Redis helpers ----------
 def _get_redis():
     url = os.getenv("KV_URL")
@@ -51,24 +79,6 @@ def upload_page(request):
         return redirect('login')
     return render(request, 'upload.html')
 
-# ---------- login ------------- #
-
-def login_view(request):
-    # GET: só mostra a página de login
-    if request.method != 'POST':
-        return render(request, 'login.html')
-
-    # POST: valida o login (troque pela sua lógica real)
-    usuario = request.POST.get('usuario')
-    senha = request.POST.get('senha')
-
-    if usuario == 'admin' and senha == '1234':   # <<< substitua pela sua verificação
-        request.session['usuario'] = usuario
-        return redirect('upload_page')
-    else:
-        messages.error(request, 'Usuário ou senha incorretos')
-        return render(request, 'login.html')
-    
 # ---------- pipeline ----------
 def _processar_com_sua_funcao_usando_arquivos(tmp_in_path: str) -> bytes:
     """

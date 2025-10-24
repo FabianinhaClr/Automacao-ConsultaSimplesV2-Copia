@@ -109,18 +109,20 @@
 
         <p class="subtitle">Faça login para acessar o sistema</p>
         <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <input type="text"   name="usuario" placeholder="Usuário" required>
-        <input type="password" name="senha"   placeholder="Senha"   required>
-        <button type="submit">Entrar</button>
-        </form>
+       <form id="form-login" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="text"     name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha"   placeholder="Senha"   required>
+            <button type="submit">Entrar</button>
+            </form>
 
-        {% if messages %}
-        {% for m in messages %}
-            <div>{{ m }}</div>
-        {% endfor %}
-        {% endif %}
-        </form>
+{% if messages %}
+  <div id="msgs">
+    {% for message in messages %}
+      <div>{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
 
         <div class="hint mt-3" style="font-size:0.85rem;">
             Versão interna — Rossetto Advogados. Não compartilhe dados sensíveis sem autorização.
