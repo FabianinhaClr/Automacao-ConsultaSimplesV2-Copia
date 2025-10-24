@@ -108,20 +108,18 @@
         </div>
 
         <p class="subtitle">Faça login para acessar o sistema</p>
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="text"   name="usuario" placeholder="Usuário" required>
+        <input type="password" name="senha"   placeholder="Senha"   required>
+        <button type="submit">Entrar</button>
+        </form>
 
-        <form method="post">
-            {% csrf_token %}
-            
-            {% if error %}
-                <div class="error">{{ error }}</div>
-            {% endif %}
-
-            <input class="form-control" type="text" name="username" placeholder="Usuário" required>
-            <input class="form-control" type="password" name="password" placeholder="Senha" required>
-
-            <div class="d-grid">
-                <button type="submit" class="btn-rossetto">Entrar</button>
-            </div>
+        {% if messages %}
+        {% for m in messages %}
+            <div>{{ m }}</div>
+        {% endfor %}
+        {% endif %}
         </form>
 
         <div class="hint mt-3" style="font-size:0.85rem;">

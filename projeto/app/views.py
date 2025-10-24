@@ -46,13 +46,12 @@ def _save_result(job_id, content_bytes: bytes, filename: str, ttl_seconds: int =
 def index(request):
     return redirect('login')
 
-
 def upload_page(request):
-    # mantém seu layout do upload
-    return render(request, "upload.html")
+    if not request.session.get('usuario'):
+        return redirect('login')
+    return render(request, 'upload.html')
 
 # ---------- login ------------- #
-
 
 def login_view(request):
     # GET: só mostra a página de login
