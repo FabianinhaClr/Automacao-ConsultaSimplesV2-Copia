@@ -43,7 +43,6 @@ def _save_result(job_id, content_bytes: bytes, filename: str, ttl_seconds: int =
 
 # ---------- suas páginas ----------
 
-
 def index(request):
     return redirect('login')
 
@@ -52,6 +51,25 @@ def upload_page(request):
     # mantém seu layout do upload
     return render(request, "upload.html")
 
+# ---------- login ------------- #
+
+
+def login_view(request):
+    # GET: só mostra a página de login
+    if request.method != 'POST':
+        return render(request, 'login.html')
+
+    # POST: valida o login (troque pela sua lógica real)
+    usuario = request.POST.get('usuario')
+    senha = request.POST.get('senha')
+
+    if usuario == 'admin' and senha == '1234':   # <<< substitua pela sua verificação
+        request.session['usuario'] = usuario
+        return redirect('upload_page')
+    else:
+        messages.error(request, 'Usuário ou senha incorretos')
+        return render(request, 'login.html')
+    
 # ---------- pipeline ----------
 def _processar_com_sua_funcao_usando_arquivos(tmp_in_path: str) -> bytes:
     """
